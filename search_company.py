@@ -15,4 +15,4 @@ def search_word(search_txt):
 
     browser.close()
 
-    return results
+    return '\n'.join([f'<b>{t[0]}</b> -> {t[1]}' for t in results])
