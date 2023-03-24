@@ -50,11 +50,42 @@ async def sustainability(message: types.Message):
     await message.delete()
 
 
+@dp.message_handler(commands=['dividend'])
+async def dividend(message: types.Message):
+    if market_beat:
+        reply = market_beat.get_dividend()
+    else:
+        reply = br.TYPE_IN
+    await send_message(message, reply)
+    await message.delete()
+
+
+@dp.message_handler(commands=['about'])
+async def about(message: types.Message):
+    if market_beat:
+        reply = market_beat.get_about()
+    else:
+        reply = br.TYPE_IN
+    await send_message(message, reply)
+    await message.delete()
+
+
+@dp.message_handler(commands=['chart'])
+async def chart(message: types.Message):
+    if market_beat:
+        reply = market_beat.get_chart()
+    else:
+        reply = br.TYPE_IN
+    await send_message(message, reply)
+    await message.delete()
+
+
 @dp.message_handler(content_types=['text'])
 async def get_info(message: types.Message):
     ticker = message.text.strip().upper()
     if ticker not in tickers_list:
-        await send_message(message, br.SEARCH)
+        await message.reply(text=br.SEARCH)
+        #await send_message(message, br.SEARCH)
         reply = search_company.search_word(ticker)
         if reply:
             await send_message(message, br.CHOOSE + reply)
@@ -68,19 +99,6 @@ async def get_info(message: types.Message):
     await send_message(message, reply)
     await send_message(message, br.COMPANYS_INFO)
 
-
-@dp.message_handler(commands=['analytics'])
-async def analytics(message: types.Message):
-    reply = market_beat.get_analysis()
-    await send_message(message, reply)
-    await message.delete()
-
-
-@dp.message_handler(commands=['sustainability'])
-async def sustainability(message: types.Message):
-    reply = market_beat.get_sustainability()
-    await send_message(message, reply)
-    await message.delete()
 
 # reply = market_beat.get_analisys()
 # bot.send_message(message.chat.id, reply, parse_mode='html')
