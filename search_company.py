@@ -14,7 +14,7 @@ def search_word(search_txt):
     tickers = browser.find_elements(By.CLASS_NAME, 'ticker-area')
     titles = browser.find_elements(By.CLASS_NAME, 'title-area')
 
-    results = [(t[0].text, t[1].text) for t in zip(tickers[:10], titles[:10]) if t[0].text in tickers_list]
+    results = [(t[0].text, t[1].text) for t in zip(tickers[:15], titles[:15]) if t[0].text in tickers_list]
 
     browser.close()
 

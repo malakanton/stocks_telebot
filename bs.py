@@ -24,10 +24,10 @@ class MarketBeatInfo:
         title = self.soup.find('h1', class_='PageTitleHOne').get_text()
         return re.sub(r'\n', '', re.split(r'Stock', title)[0])
 
-    def get_about(self) -> str:
+    def get_about(self) -> list:
         about = []
         for item in self.soup.find('div', class_="read-more-section") \
-                .find_all('p'):
+                             .find_all('p'):
             about.append(item.get_text())
         return '\n\n'.join(about)
 
@@ -38,7 +38,10 @@ class MarketBeatInfo:
                         .find('div', class_='carousel-item active rankAnalyst') \
                         .find_all('p'):
             analysis.append(item.get_text())
-
+        lst = analysis[0].split()
+        lst.insert(lst.index('of') + 1, '<b>')
+        lst.insert(lst.index('The'), '</b>\n')
+        analysis[0] = ' '.join(lst)
         return '\n\n'.join(analysis)
 
     def get_sustainability(self) -> str:
@@ -65,6 +68,6 @@ class MarketBeatInfo:
 
     def get_chart(self) -> str:
         text = self.soup.find('div', class_='h3 m-0 pt-3 d-inline-block').get_text()
-        market, ticker = text.split(':')[0], text.split(':')[1]
+        text_div = text.split(':')
+        market, ticker = text_div[0], text_div[1]
         return f'https://www.tradingview.com/symbols/{market}-{ticker}/'
-
