@@ -18,4 +18,7 @@ def search_word(search_txt):
 
     browser.close()
 
-    return '\n'.join([f'<b>{t[0]}</b> -> {t[1]}' for t in results])
+    res_text = '\n'.join([f'<b>{t[0]}</b> -> {t[1]}' for t in results])
+    res_list = [t[0] for t in results]
+
+    return res_text, res_list

@@ -24,7 +24,7 @@ def help_kb():
     return kb
 
 
-def actions_cb():
+def actions_kb():
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.add(
         KeyboardButton('/about ℹ️'),
@@ -34,3 +34,13 @@ def actions_cb():
         KeyboardButton('/dividend 💵')
         )
     return kb
+
+
+def tickers_kb(tickers: list):
+    ikb = InlineKeyboardMarkup(row_width=2)
+    for ticker in tickers:
+        ikb.add(InlineKeyboardButton(
+            text=ticker,
+            callback_data=ticker
+        ))
+    return ikb

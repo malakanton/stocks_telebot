@@ -24,6 +24,10 @@ class MarketBeatInfo:
         title = self.soup.find('h1', class_='PageTitleHOne').get_text()
         return re.sub(r'\n', '', re.split(r'Stock', title)[0])
 
+    def get_picture(self) -> str:
+        return self.soup.find('div', class_='mt-4 mb-2 position-relative gradient-green c-white py-1 px-2')\
+                           .find('img').attrs['src']
+
     def get_about(self) -> list:
         about = []
         for item in self.soup.find('div', class_="read-more-section") \
